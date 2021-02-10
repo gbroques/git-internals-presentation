@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Git Internals</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<style>
+			.slides {
+				background-color: #191919;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3><a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">Git Internals</a></h3>
+					<h4 class="fragment">Part 1: Objects</h4>
+				</section>
+				<section>
+					<h3>Overview</h3>
+					<ul>
+						<li class="fragment">Motivation</li>
+						<li class="fragment">Objects
+							<ul class="fragment">
+								<li>3 Types</li>
+							</ul>
+						</li>
+						<li class="fragment">Two new git commands</li>
+						<li class="fragment">DEMO</li>
+					</ul>
+				</section>
+				<section>
+					<blockquote>
+						We found that understanding this information is <strong class="fragment highlight-blue">fundamentally important to appreciating how useful and powerful Git is</strong>, others argue that it's confusing and unnecessarily complex for beginners. ... We leave it up to you to decide.
+					</blockquote>
+					<p>— <a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">10.1 Git Internals - Plumbing and Porcelain</a><p>
+				</section>
+				<section>
+					<p>How does <code>git</code> <em>really</em> work under the hood?</p>
+				</section>
+				<section>
+					<p>How are you able to reconstruct an <em>entire</em> project at any point in time, given only a commit hash?</p>
+				</section>
+				<section>
+					<p>How do <code>git</code> repositories <em>not</em> take up a lot of space on your hard-drive?</p>
+				</section>
+				<section>
+					<h3>What is Git?</h3>
+					<ul>
+						<li class="fragment"><a href="https://en.wikipedia.org/wiki/Content-addressable_storage">a content-addressable filesystem</a></li>
+						<li class="fragment">a simple key-value data store</li>
+					</ul>
+				</section>
+				<section>
+					<h4>What are the values and keys?</h4>
+					<p class="fragment">Values are <strong class="fragment highlight-green">objects</strong>.</p>
+					<p class="fragment">Keys are <strong class="fragment highlight-green">hashes</strong>.</p>
+				</section>
+				<section>
+					<p>Objects are <strong class="fragment highlight-red">immutable</strong>.</p>
+				</section>
+				<section>
+					<h3>Cloning</h3>
+					<pre class="text">
+						<code data-noescape>
+$ git clone git@github.com:gbroques/prop-types.git
+Cloning into 'prop-types'...
+remote: Enumerating <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 6125, done.
+remote: Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (6125/6125), done.
+remote: Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3578/3578), done.
+remote: Total 6125 (delta 2500), reused 5704 (delta 2238)    
+Receiving <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (6125/6125), 40.72 MiB | 592.00 KiB/s, done.
+Resolving deltas: 100% (2500/2500), done.
+Updating files: 100% (2951/2951), done.
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Pushing</h3>
+					<pre class="text">
+						<code data-noescape>
+$ git push
+Enumerating <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 5, done.
+Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3/3), done.
+Writing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3/3), 1023 bytes | 511.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+To git@github.com:gbroques/prop-types.git
+	8fd6b59..4e7ce21  master -> master
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Pulling</h3>
+					<pre class="text">
+						<code data-noescape>
+$ git pull
+remote: Enumerating <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 112, done.
+remote: Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (101/101), done.
+remote: Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (71/71), done.
+remote: Total 71 (delta 52), reused 0 (delta 0)
+Unpacking <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (71/71), 9.84 KiB | 13.00 KiB/s, done.
+From git@github.com:gbroques/prop-types.git
+	f1c0c2a3..3f4264d6  release/1.0             -> origin/release/1.0
+	* [new branch]        feature/adding-use-claims-map -> origin/feature/adding-use-claims-map
+	* [new branch]        feature/cleaning-up-app -> origin/feature/cleaning-up-app
+	* [new branch]        feature/typography-font-size -> origin/feature/typography-font-size
+	2f0c2b27..ef61c43d  feature/updating-url-in-commands -> origin/feature/updating-url-in-commands
+	* [new branch]        release/1.1             -> origin/release/1.1
+Updating f1c0c2a3..3f4264d6
+Fast-forward
+	package.json                         |  4 ++--
+	public/config.json                   | 10 +++++-----
+	public/index.html                    |  3 +++
+	public/pos-stores-index.html         |  3 +++
+	public/stores-index.html             |  3 +++
+	src/components/commands/commands.js  | 17 ++++++++++++++---
+	src/config/commands.config.js        |  6 ++++++
+	src/config/commands.environment.json | 11 +++++++++++
+	src/config/commandsOrigins.config.js |  4 ++++
+	9 files changed, 51 insertions(+), 10 deletions(-)
+	create mode 100644 src/config/commands.config.js
+	create mode 100644 src/config/commands.environment.json
+	create mode 100644 src/config/commandsOrigins.config.js
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>3 Object Types</h3>
+					<ol>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="100px" alt="Blob"><span class="fragment">— (<em>file</em>)</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="100px" alt="Tree"> <span class="fragment">— (<em>directory</em>)</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/commit.svg" width="100px" alt="Commit"> <span class="fragment">— (<em>pointer to tree</em>)</span></li>
+					</ol>
+				</section>
+				<section>
+					<h3>Object Hashing & Storage</h3>
+					<p class="fragment">Stored in the object database (<code>.git/objects/</code>)</p>
+					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> SHA-1 hash</p>
+					<pre class="bash fragment">
+						<code data-noescape>
+.git/objects
+├── 0f/
+│   └── 6a4e6354e536514412ba38ab50ad6264a4d323  # <strong>38</strong> char filename
+├── 2d/
+│   ├── 0e74b07052fd2d44788bb3cced2923e56786bb
+│   └── 2bd6b04c3e39b0c611ada8b0cbd12e64f46c11
+├── dd/
+│   └── f93dd01ed0c56b50f98ef7c4773a81a5a17a5b
+						</code>
+					</pre>
+                </section>
+                <section>
+                    Objects form a <a target="_blank" href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>.<p style="text-align: center;"><img src="img/dag.png" alt="DAG"></p>
+                </section>
+				<section>
+					<h4>Two New Git Commands</h4>
+					<ol>
+						<li class="fragment"><code>git hash-object</code></li>
+						<li class="fragment"><code>git cat-file</code></li>
+					</ol>
+				</section>
+				<section>
+					<p><code>git <strong data-fragment-index="1" class="fragment highlight-green">hash-object</strong></code></p>
+					<p class="fragment" data-fragment-index="0">generate the <strong data-fragment-index="1" class="fragment highlight-green">hash</strong> of an <strong  data-fragment-index="1" class="fragment highlight-green">object</strong> from it's <em>content</em></p>
+					<p class="fragment" data-fragment-index="2"><a target="_blank" href="https://git-scm.com/docs/git-hash-object">Reference</a></p>
+				</section>
+				<section>
+					<h3>Hash-Object Example</h3>
+<pre class="text"><code data-trim>
+$ echo "text" | git hash-object --stdin
+8e27be7d6154a1f68ea9160ef0e18691d20560
+</code></pre>
+				</section>
+				<section>
+					<p><code>git cat-file -<strong class="fragment highlight-green" data-fragment-index="1">p</strong> &lt;hash&gt;</code></p>
+					<p data-fragment-index="0" class="fragment"><strong data-fragment-index="1" class="fragment highlight-green">pretty print</strong> an object</code></p>
+					<p data-fragment-index="2" class="fragment"><a target="_blank" href="https://git-scm.com/docs/git-cat-file">Reference</a></p>
+				</section>
+				<section>
+					<p><code>git cat-file -<strong class="fragment highlight-green" data-fragment-index="1">t</strong> &lt;hash&gt;</code></p>
+					<p class="fragment" data-fragment-index="0">output the <strong data-fragment-index="1" class="fragment highlight-green">type</strong> of an object</code></p>
+					<p data-fragment-index="2" class="fragment"><a target="_blank" href="https://git-scm.com/docs/git-cat-file">Reference</a></p>
+				</section>
+				<section>
+					<ul style="list-style-type: none; margin: 0; padding: 0;">
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="200px" alt="Blob">?</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="200px" alt="Tree">?</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/commit.svg" width="200px" alt="Commit">?</li>
+					</ul>
+				</section>
+				<section>
+					<!-- See README.md for commands performed during demo. -->
+					<h1>Demo!</h1>
+				</section>
+				<section>
+<pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|1-3">
+$ echo "one text" > 1.txt
+$ git add .
+$ git commit -m "Initial commit"
+</code></pre>
+				</section>
+				<section style="background-color: white;">
+					<img style="width: 150px;" src="img/initialcommit.svg" alt="Initial commit">
+				</section>
+				<section>
+<pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|1-3">
+$ echo "a change" >> 1.txt
+$ git add .
+$ git commit -m "Second commit"
+</code></pre>
+				</section>
+				<section style="background-color: white;">
+					<img style="width: 500px;" src="img/secondcommit.svg" alt="Second commit">
+				</section>
+				<section>
+<pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|4|1-4">
+$ mkdir dir
+$ echo "two text" > dir/2.txt
+$ git add .
+$ git commit -m "Third commit"
+</code></pre>
+				</section>
+				<section style="background-color: white;">
+					<img style="width: 600px;" src="img/thirdcommit.svg" alt="Third commit">
+				</section>
+				<section>
+					<h3>Current State</h3>
+					<pre class="bash">
+						<code>
+demo/
+├── 1.txt # "one text\na change"
+└── dir/
+    └── 2.txt # "two text"
+						</code>
+					</pre>
+				</section>
+				<section>
+					<p>If I made a <strong class="fragment highlight-red">fourth commit</strong>:
+					<ul>
+						<li class="fragment">adding a file — <strong class="fragment highlight-blue"><code>3.txt</code></strong></li>
+						<li class="fragment">with the content "<strong class="fragment highlight-green"><code>one text</code></strong>"</li>
+					</ul>
+					<p class="fragment">then <strong>how many new objects would be created?</strong></p>
+					<pre class="fragment bash">
+						<code data-trim data-noescape>
+demo/
+├── 1.txt # "one text\na change"
+<strong><mark>├── 3.txt # "one text"</mark></strong>
+└── dir/
+    └── 2.txt # "two text"
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h1>2</h1>
+				</section>
+				<section>
+					<p><img style="margin: 0 20px 0 0;" src="img/commit.svg" width="300px" alt="Commit"></p>
+					<p class="fragment"><img style="margin: 0 20px 0 0;" src="img/tree.svg" width="300px" alt="Tree"></p>
+				</section>
+				<section>
+<pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|1-3">
+$ echo "one text" > 3.txt
+$ git add .
+$ git commit -m "Fourth commit"
+</code></pre>
+				</section>
+				<section style="background-color: white;">
+					<img style="width: 650px;" src="img/fourthcommit.svg" alt="Fourth commit">
+				</section>
+				<section>
+					<h3>Conclusion</h3>
+					<p>Git is a <a href="https://en.wikipedia.org/wiki/Content-addressable_storage">content-addressable filesystem</a>, and a <em>simple</em> key-value store, built on:</p>
+					<ul>
+						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/blob.svg" width="50px" alt="Blob"><strong>Blobs</strong> — like files</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/tree.svg" width="50px" alt="Tree"><strong>Trees</strong> — like directories</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/commit.svg" width="50px" alt="Commit"><strong>Commits</strong> — <em>pointers to trees</em> (with meta-data)</li>
+					</ul>
+					<p class="fragment">and <code>git</code> relates these <strong class="fragment highlight-green">objects</strong> together in a <strong>graph structure</strong> on disk.</p>	
+				</section>
+				<section>
+					<h3>Additional Resources</h3>
+					<ul>
+						<li><a target="_blank" href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain">https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain</a></li>
+						<li><a target="_blank" href="https://medium.com/@paritosh90/understanding-git-internals-c389bc47faeb">GIT Internals (Part 1: Architecture and Objects)</a></li>
+						<li><a target="_blank" href="https://www.youtube.com/watch?v=P6jD966jzlk&ab_channel=GitLab">YouTube: Git Internals - How Git Works - Fear Not The SHA!</a></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Part 2: HEAD, Branches, and Tags</h3>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+			Reveal.configure({ pdfSeparateFragments: false });
+		</script>
+	</body>
+</html>
