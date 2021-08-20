@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Git Internals</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<style>
+			.slides {
+				background-color: #191919;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3><a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">Git Internals</a></h3>
+					<h4 class="fragment">Part 2: Branches and HEAD</h4>
+                </section>
+                <section>
+                    <h3>Part 1: Commit, trees, and blobs... <span class="fragment">oh my! 😲</span></h3>
+                    <div style="background-color: white;">
+                        <img style="width: 500px; height: 350px;" src="img/c1-with-tree-blob.svg" alt="Commit, trees, and blobs">
+                    </div>
+                </section>
+				<section>
+					<h3>Overview</h3>
+					<ul>
+						<li class="fragment">Branches</li>
+                        <li class="fragment">HEAD</li>
+                        <li class="fragment">Picture walkthrough</li>
+                        <li class="fragment">Command line demo!</li>
+					</ul>
+				</section>
+                <section>
+                    <h3>Commit</h3>
+                    <div style="background-color: white; height: 250px;">
+                        <img style="width: 500px; height: -webkit-fill-available" src="img/c1.svg" alt="Commit">
+                    </div>
+                    <p>on <code class="fragment highlight-blue">master</code> branch</p>
+                </section>
+                <section>
+                    <h2>What is a branch?</h2>
+                    <h1 class="fragment">🤔</h1>
+                </section>
+                <section>
+                    <h3>Commit on master branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 500px; height: -webkit-fill-available;" src="img/c1-with-master.svg" alt="Commit and master">
+                    </div>
+                    <p class="fragment grow highlight-green">Branches are pointers to commits.</p>
+                </section>
+                <section>
+                    <h2>What is HEAD?</h2>
+                    <h1 class="fragment">🤔</h1>
+                </section>
+                <section>
+                    <h3>HEAD</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
+                    </div>
+                    <p class="fragment grow highlight-green">HEAD is a pointer to whatever we have checked out.</p>
+                </section>
+                <section>
+                    <h4>What is HEAD (continued)?</h4>
+<pre class="text"><code data-trim>
+$ cat .git/HEAD
+ref: refs/heads/master
+</code></pre>
+                </section>
+                <section>
+                    <h4>What is HEAD (continued)?</h4>
+<pre class="text"><code data-trim>
+$ cat .git/refs/heads/master
+7434d3f407245cd86a9fac77c9cc097d78a392bf
+</code></pre>
+                </section>
+				<section>
+					<h3>Steps</h3>
+					<ol>
+						<li class="fragment">Commit on default <code class="fragment highlight-blue">master</code> branch (<strong class="fragment highlight-green">C1</strong>)</li>
+                        <li class="fragment">Commit on <code class="fragment highlight-blue">master</code> branch <em>again</em> (<strong class="fragment highlight-green">C2</strong>)</li>
+                        <li class="fragment">Create and checkout a <code class="fragment highlight-red">feature-branch</code></li>
+                        <li class="fragment">Commit on <code class="fragment highlight-red">feature-branch</code> (<strong class="fragment highlight-green">C3</strong>)</li>
+                        <li class="fragment"><code>git checkout <span class="fragment highlight-blue">master</span></code></li>
+                        <li class="fragment">Commit on <code class="fragment highlight-blue">master</code> branch <em>again</em> (<strong class="fragment highlight-green">C4</strong>)</li>
+                    </ol>
+				</section>
+                <section>
+                    <h3>(1) Commit 1</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
+                    </div>
+                    <p class="fragment">(2) Commit 2 ➜</p>
+                </section>
+                <section>
+                    <h3>(2) Commit 2</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 100%;" src="img/c2.svg" alt="Commit 2">
+                    </div>
+                    <p class="fragment">(3) <code>git checkout -b feature-branch</code> ➜</p>
+                </section>
+                <section>
+                    <h4>(3) <code>git checkout -b feature-branch</code></h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 500px;" src="img/c2-with-branch.svg" alt="Feature branch">
+                    </div>
+                    <p class="fragment">(4) Commit 3 ➜</p>
+                </section>
+                <section>
+                    <h3>(4) Commit 3</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 100%;" src="img/c3.svg" alt="Commit 3">
+                    </div>
+                    <p class="fragment">(5) <code>git checkout master</code> ➜</p>
+                </section>
+                <section>
+                    <h4>(5) <code>git checkout master</code></h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 500px;" src="img/c3-checkout-master.svg" alt="Feature branch">
+                    </div>
+                    <p class="fragment">(6) Commit 4 ➜</p>
+                </section>
+                <section>
+                    <h3>(6) Commit 4</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 500px; height: 500px;" src="img/c4.svg" alt="Feature branch">
+                    </div>
+                </section>
+                <section>
+                    <h1>DEMO!</h1>
+                </section>
+				<section>
+					<h3>Additional Resources</h3>
+					<ul>
+						<li><a target="_blank" href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain">https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain</a></li>
+						<li><a target="_blank" href="https://medium.com/@paritosh90/understanding-git-internals-part-2-fa42aa762601">GIT Internals (Part 2: Branching and HEAD)</a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+			Reveal.configure({ pdfSeparateFragments: false });
+		</script>
+	</body>
+</html>
