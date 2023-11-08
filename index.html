@@ -38,27 +38,37 @@
 						<li class="fragment">DEMO</li>
 					</ul>
 				</section>
+                <section>
+                    <h3>Motivation</h3>
+                </section>
 				<section>
 					<blockquote>
 						We found that understanding this information is <strong class="fragment highlight-blue">fundamentally important to appreciating how useful and powerful Git is</strong>, others argue that it's confusing and unnecessarily complex for beginners. ... We leave it up to you to decide.
 					</blockquote>
 					<p>— <a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">10.1 Git Internals - Plumbing and Porcelain</a><p>
 				</section>
+                <section>
+                    <h3>Motivating Questions</h3>
+                </section>
 				<section>
-					<p>How does <code>git</code> <em>really</em> work under the hood?</p>
+					<p>How does <code>git</code> <em>really</em> work?</p>
 				</section>
 				<section>
-					<p>How are you able to reconstruct an <em>entire</em> project at any point in time, given only a commit hash?</p>
+					<p>How does <code>git</code> reconstruct a project with only a commit hash?</p>
 				</section>
 				<section>
-					<p>How do <code>git</code> repositories <em>not</em> take up a lot of space on your hard-drive?</p>
+					<p>How do <code>git</code> repositories <em>not</em> take up a lot of disk space?</p>
+				</section>
+				<section>
+					<h3>Objects</h3>
 				</section>
 				<section>
 					<h3>What is Git?</h3>
-					<ul>
-						<li class="fragment"><a href="https://en.wikipedia.org/wiki/Content-addressable_storage">a content-addressable filesystem</a></li>
+                    <p class="fragment">Two unconventional definitions:</p>
+					<ol>
+						<li class="fragment"><a href="https://en.wikipedia.org/wiki/Content-addressable_storage" target="_blank">a content-addressable filesystem</a></li>
 						<li class="fragment">a simple key-value data store</li>
-					</ul>
+					</ol>
 				</section>
 				<section>
 					<h4>What are the values and keys?</h4>
@@ -68,6 +78,9 @@
 				<section>
 					<p>Objects are <strong class="fragment highlight-red">immutable</strong>.</p>
 				</section>
+                <section>
+                    <p><code>git</code> frequently provides information about objects!</p>
+                </section>
 				<section>
 					<h3>Cloning</h3>
 					<pre class="text">
@@ -78,7 +91,7 @@ remote: Enumerating <strong data-fragment-index="0" class="fragment highlight-re
 remote: Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (6125/6125), done.
 remote: Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3578/3578), done.
 remote: Total 6125 (delta 2500), reused 5704 (delta 2238)    
-Receiving <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (6125/6125), 40.72 MiB | 592.00 KiB/s, done.
+<span data-fragment-index="0" class="fragment highlight-green">Receiving</span> <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (6125/6125), 40.72 MiB | 592.00 KiB/s, done.
 Resolving deltas: 100% (2500/2500), done.
 Updating files: 100% (2951/2951), done.
 						</code>
@@ -93,7 +106,7 @@ Enumerating <strong data-fragment-index="0" class="fragment highlight-red">objec
 Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (5/5), done.
 Delta compression using up to 4 threads
 Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3/3), done.
-Writing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3/3), 1023 bytes | 511.00 KiB/s, done.
+<span data-fragment-index="0" class="fragment highlight-green">Writing</span> <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (3/3), 1023 bytes | 511.00 KiB/s, done.
 Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
 To git@github.com:gbroques/prop-types.git
 	8fd6b59..4e7ce21  master -> master
@@ -109,7 +122,7 @@ remote: Enumerating <strong data-fragment-index="0" class="fragment highlight-re
 remote: Counting <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (101/101), done.
 remote: Compressing <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (71/71), done.
 remote: Total 71 (delta 52), reused 0 (delta 0)
-Unpacking <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (71/71), 9.84 KiB | 13.00 KiB/s, done.
+<span data-fragment-index="0" class="fragment highlight-green">Unpacking</span> <strong data-fragment-index="0" class="fragment highlight-red">objects</strong>: 100% (71/71), 9.84 KiB | 13.00 KiB/s, done.
 From git@github.com:gbroques/prop-types.git
 	f1c0c2a3..3f4264d6  release/1.0             -> origin/release/1.0
 	* [new branch]        feature/adding-use-claims-map -> origin/feature/adding-use-claims-map
@@ -138,15 +151,15 @@ Fast-forward
 				<section>
 					<h3>3 Object Types</h3>
 					<ol>
-						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="100px" alt="Blob"><span class="fragment">— (<em>file</em>)</span></li>
-						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="100px" alt="Tree"> <span class="fragment">— (<em>directory</em>)</span></li>
-						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/commit.svg" width="100px" alt="Commit"> <span class="fragment">— (<em>pointer to tree</em>)</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="100px" alt="Blob"><span class="fragment">— file</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="150px" alt="Tree"> <span class="fragment">— directory</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/commit.svg" width="100px" alt="Commit"> <span class="fragment">— pointer to a tree</span></li>
 					</ol>
 				</section>
 				<section>
 					<h3>Object Hashing & Storage</h3>
 					<p class="fragment">Stored in the object database (<code>.git/objects/</code>)</p>
-					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> SHA-1 hash</p>
+					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> <a href="https://en.wikipedia.org/wiki/SHA-1#Data_integrity" target="_blank">SHA-1</a> hash</p>
 					<pre class="bash fragment">
 						<code data-noescape>
 .git/objects
@@ -161,7 +174,10 @@ Fast-forward
 					</pre>
                 </section>
                 <section>
-                    Objects form a <a target="_blank" href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>.<p style="text-align: center;"><img src="img/dag.png" alt="DAG"></p>
+                    <p style="text-align: center;"><img src="img/dag.webp" alt="DAG"></p>
+                    <p>
+                        Objects form a <a class="grow" target="_blank" href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>.
+                    </p>
                 </section>
 				<section>
 					<h4>Two New Git Commands</h4>
@@ -172,7 +188,7 @@ Fast-forward
 				</section>
 				<section>
 					<p><code>git <strong data-fragment-index="1" class="fragment highlight-green">hash-object</strong></code></p>
-					<p class="fragment" data-fragment-index="0">generate the <strong data-fragment-index="1" class="fragment highlight-green">hash</strong> of an <strong  data-fragment-index="1" class="fragment highlight-green">object</strong> from it's <em>content</em></p>
+					<p class="fragment" data-fragment-index="0">generate the <strong data-fragment-index="1" class="fragment highlight-green">hash</strong> of an <strong  data-fragment-index="1" class="fragment highlight-green">object</strong> from its <em>content</em></p>
 					<p class="fragment" data-fragment-index="2"><a target="_blank" href="https://git-scm.com/docs/git-hash-object">Reference</a></p>
 				</section>
 				<section>
@@ -266,7 +282,7 @@ demo/
 					<h1>2</h1>
 				</section>
 				<section>
-					<p><img style="margin: 0 20px 0 0;" src="img/commit.svg" width="300px" alt="Commit"></p>
+					<p class="fragment"><img style="margin: 0 20px 0 0;" src="img/commit.svg" width="265px" alt="Commit"></p>
 					<p class="fragment"><img style="margin: 0 20px 0 0;" src="img/tree.svg" width="300px" alt="Tree"></p>
 				</section>
 				<section>
