@@ -65,4 +65,12 @@ done
 
 ## Generating Slides
 
+Navigate to:
+
+    http://localhost:8000/?print-pdf
+
+Ctrl + P to print and save.
+
+Alternatively `decktape`, but this doesn't render images well:
+
     decktape http://localhost:8000/ slides.pdf
