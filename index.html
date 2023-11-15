@@ -151,8 +151,8 @@ Fast-forward
 				<section>
 					<h3>3 Object Types</h3>
 					<ol>
-						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="100px" alt="Blob"><span class="fragment">— file</span></li>
-						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="150px" alt="Tree"> <span class="fragment">— directory</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/blob.svg" width="100px" alt="Blob"><span class="fragment">— <em>contents</em> of a file</span></li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/tree.svg" width="150px" alt="Tree"> <span class="fragment">— <em>contents</em> of a directory</span></li>
 						<li class="fragment"><img style="margin: 0 20px 0 0;"  src="img/commit.svg" width="100px" alt="Commit"> <span class="fragment">— pointer to a tree</span></li>
 					</ol>
 				</section>
@@ -168,8 +168,8 @@ Fast-forward
 ├── 2d/
 │   ├── 0e74b07052fd2d44788bb3cced2923e56786bb
 │   └── 2bd6b04c3e39b0c611ada8b0cbd12e64f46c11
-├── dd/
-│   └── f93dd01ed0c56b50f98ef7c4773a81a5a17a5b
+└── dd/
+    └── f93dd01ed0c56b50f98ef7c4773a81a5a17a5b
 						</code>
 					</pre>
                 </section>
@@ -299,8 +299,8 @@ $ git commit -m "Fourth commit"
 					<h3>Conclusion</h3>
 					<p>Git is a <a href="https://en.wikipedia.org/wiki/Content-addressable_storage" target="_blank">content-addressable filesystem</a>, and a <em>simple</em> key-value store, built on:</p>
 					<ul>
-						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/blob.svg" width="50px" alt="Blob"><strong>Blobs</strong> — like files</li>
-						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/tree.svg" width="50px" alt="Tree"><strong>Trees</strong> — like directories</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/blob.svg" width="50px" alt="Blob"><strong>Blobs</strong> — <em>contents</em> of a file</li>
+						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/tree.svg" width="50px" alt="Tree"><strong>Trees</strong> — <em>contents</em> of a directory</li>
 						<li class="fragment"><img style="margin: 0 20px 0 0;" src="img/commit.svg" width="50px" alt="Commit"><strong>Commits</strong> — <em>pointers to trees</em> (with meta-data)</li>
 					</ul>
 					<p class="fragment">and <code>git</code> relates these <strong class="fragment highlight-green">objects</strong> together in a <strong>graph structure</strong> on disk.</p>	
