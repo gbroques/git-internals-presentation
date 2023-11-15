@@ -158,8 +158,8 @@ Fast-forward
 				</section>
 				<section>
 					<h3>Object Hashing & Storage</h3>
-					<p class="fragment">Stored in the object database (<code>.git/objects/</code>)</p>
-					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> <a href="https://en.wikipedia.org/wiki/SHA-1#Data_integrity" target="_blank">SHA-1</a> hash</p>
+					<p class="fragment">Stored in the object database (<code>.git/objects/</code>).</p>
+					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> <a href="https://en.wikipedia.org/wiki/SHA-1#Data_integrity" target="_blank">SHA-1</a> hash.</p>
 					<pre class="bash fragment">
 						<code data-noescape>
 .git/objects
@@ -174,7 +174,27 @@ Fast-forward
 					</pre>
                 </section>
                 <section>
-                    <p style="text-align: center;"><img src="img/dag.webp" alt="DAG"></p>
+                    <h3>Object File Compression</h3>
+                    <p class="fragment">Compressed using <a href="https://en.wikipedia.org/wiki/Zlib" target="_blank">zlib</a>.</p>
+					<pre class="bash fragment">
+						<code data-noescape>
+$ cat .git/objects/0f/6a4e6354e536514412ba38ab50ad6264a4d323
+x☺K□□OR□d□□KU(I□(□☻,□♣*
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <section>
+                        <h3>Object File Contents</h3>
+                        <p class="fragment">Header containing type, size in bytes, and <a href="https://en.wikipedia.org/wiki/Null_character" target="_blank">null character</a> separating header from content.</p>
+<pre class="bash fragment"><code data-trim>
+$ echo -e 'blob 9\x00one text' | sha1sum --text
+0f6a4e6354e536514412ba38ab50ad6264a4d323  -
+</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <p style="text-align: center;"><img style="max-width: 50%; background-color: white; padding: 3%;" src="img/dag.svg" alt="DAG"></p>
                     <p>
                         Objects form a <a target="_blank" href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>.
                     </p>
@@ -220,9 +240,27 @@ $ echo "text" | git hash-object --stdin
 					<h1>Demo!</h1>
 				</section>
 				<section>
+                    <h3>Staging a file</h3>
 <pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|1-3">
 $ echo "one text" > 1.txt
 $ git add .
+</code></pre>
+				</section>
+                <section>
+                    <p><code>git</code> creates blobs upon staging.</p>
+                    <p><img src="img/blob.svg" width="10%" alt="Blob"></p>
+                </section>
+                <section>
+                    <h3>Where's the filename?</h3>
+<pre class="bash fragment"><code data-noescape>
+$ cat -v .git/index | grep "1.txt"
+DIRC^@^@^@^B^@^@^@^AeTJ"7M-=+M-PeTJ"7M-[M-N^@^@^@^@^@^@^@^@^@^@^@M-^AM-$^@^@^@^@^@^@^@^@^@^@^@
+^OjNcTM-e6QD^RM-:8M-+PM--bdM-$M-S#^@^E<strong><mark>1.txt</mark></strong>^@^@^@^@^@9M-)"^M=pzW>M-^^^CkM-x ^_M-;M-^H^[^@^N
+</code></pre>
+                </section>
+				<section>
+                    <h3>Initial commit</h3>
+<pre class="text fragment"><code data-noescape data-trim>
 $ git commit -m "Initial commit"
 </code></pre>
 				</section>
@@ -230,6 +268,7 @@ $ git commit -m "Initial commit"
 					<img style="width: 150px;" src="img/initialcommit.svg" alt="Initial commit">
 				</section>
 				<section>
+                    <h3>Committing a change</h3>
 <pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|1-3">
 $ echo "a change" >> 1.txt
 $ git add .
@@ -240,6 +279,7 @@ $ git commit -m "Second commit"
 					<img style="width: 500px;" src="img/secondcommit.svg" alt="Second commit">
 				</section>
 				<section>
+                    <h3>Committing a directory</h3>
 <pre class="text"><code data-noescape data-trim data-line-numbers="1|2|3|4|1-4">
 $ mkdir dir
 $ echo "two text" > dir/2.txt
