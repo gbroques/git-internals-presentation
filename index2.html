@@ -41,13 +41,6 @@
 					</ul>
 				</section>
                 <section>
-                    <h3>Commit</h3>
-                    <div style="background-color: white; height: 250px;">
-                        <img style="width: 500px; height: -webkit-fill-available" src="img/c1.svg" alt="Commit">
-                    </div>
-                    <p>on <code class="fragment highlight-blue">master</code> branch</p>
-                </section>
-                <section>
                     <h2>What is a branch?</h2>
                     <h1 class="fragment">🤔</h1>
                 </section>
@@ -59,6 +52,13 @@
                     <p class="fragment grow highlight-green">Branches are pointers to commits.</p>
                 </section>
                 <section>
+                    <h4>What is a branch (continued)?</h4>
+<pre class="text"><code data-trim>
+$ cat .git/refs/heads/master
+7434d3f407245cd86a9fac77c9cc097d78a392bf
+</code></pre>
+                </section>
+                <section>
                     <h2>What is HEAD?</h2>
                     <h1 class="fragment">🤔</h1>
                 </section>
@@ -67,20 +67,13 @@
                     <div style="background-color: white; height: 500px;">
                         <img style="width: 500px; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
                     </div>
-                    <p class="fragment grow highlight-green">HEAD is a pointer to whatever we have checked out.</p>
+                    <p class="fragment grow highlight-green">HEAD is a pointer to whatever is checked out.</p>
                 </section>
                 <section>
                     <h4>What is HEAD (continued)?</h4>
 <pre class="text"><code data-trim>
 $ cat .git/HEAD
 ref: refs/heads/master
-</code></pre>
-                </section>
-                <section>
-                    <h4>What is HEAD (continued)?</h4>
-<pre class="text"><code data-trim>
-$ cat .git/refs/heads/master
-7434d3f407245cd86a9fac77c9cc097d78a392bf
 </code></pre>
                 </section>
 				<section>
