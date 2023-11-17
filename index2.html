@@ -38,6 +38,8 @@
                         <li class="fragment">HEAD</li>
                         <li class="fragment">Picture walkthrough</li>
                         <li class="fragment">Command line demo!</li>
+                        <li class="fragment">Tags</li>
+                        <li class="fragment">Detached HEAD</li>
 					</ul>
 				</section>
                 <section>
@@ -45,7 +47,7 @@
                     <h1 class="fragment">🤔</h1>
                 </section>
                 <section>
-                    <h3>Commit on master branch</h3>
+                    <h3>master branch</h3>
                     <div style="background-color: white; height: 350px;">
                         <img style="width: 500px; height: -webkit-fill-available;" src="img/c1-with-master.svg" alt="Commit and master">
                     </div>
@@ -53,7 +55,7 @@
                 </section>
                 <section>
                     <h4>What is a branch (continued)?</h4>
-<pre class="text"><code data-trim>
+<pre class="bash"><code data-trim>
 $ cat .git/refs/heads/master
 7434d3f407245cd86a9fac77c9cc097d78a392bf
 </code></pre>
@@ -71,7 +73,7 @@ $ cat .git/refs/heads/master
                 </section>
                 <section>
                     <h4>What is HEAD (continued)?</h4>
-<pre class="text"><code data-trim>
+<pre class="bash"><code data-trim>
 $ cat .git/HEAD
 ref: refs/heads/master
 </code></pre>
@@ -90,46 +92,82 @@ ref: refs/heads/master
                 <section>
                     <h3>(1) Commit 1</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
+                        <img style="width: 100%; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
                     </div>
                     <p class="fragment">(2) Commit 2 ➜</p>
                 </section>
                 <section>
                     <h3>(2) Commit 2</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 100%;" src="img/c2.svg" alt="Commit 2">
+                        <img style="width: 100%; height: 100%;" src="img/c2.svg" alt="Commit 2">
                     </div>
                     <p class="fragment">(3) <code>git checkout -b feature-branch</code> ➜</p>
                 </section>
                 <section>
                     <h4>(3) <code>git checkout -b feature-branch</code></h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 500px;" src="img/c2-with-branch.svg" alt="Feature branch">
+                        <img style="width: 100%; height: 500px;" src="img/c2-with-branch.svg" alt="Feature branch">
                     </div>
                     <p class="fragment">(4) Commit 3 ➜</p>
                 </section>
                 <section>
                     <h3>(4) Commit 3</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 100%;" src="img/c3.svg" alt="Commit 3">
+                        <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Commit 3">
                     </div>
                     <p class="fragment">(5) <code>git checkout master</code> ➜</p>
                 </section>
                 <section>
                     <h4>(5) <code>git checkout master</code></h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 500px;" src="img/c3-checkout-master.svg" alt="Feature branch">
+                        <img style="width: 100%; height: 100%;" src="img/c3-checkout-master.svg" alt="Feature branch">
                     </div>
                     <p class="fragment">(6) Commit 4 ➜</p>
                 </section>
                 <section>
                     <h3>(6) Commit 4</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 500px;" src="img/c4.svg" alt="Feature branch">
+                        <img style="width: 100%; height: 100%;" src="img/c4.svg" alt="Feature branch">
                     </div>
                 </section>
                 <section>
                     <h1>DEMO!</h1>
+                </section>
+                <section>
+                    <h2>What is a tag?</h2>
+                    <h1 class="fragment">🤔</h1>
+                </section>
+                <section>
+                    <h3>Tags</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 500px; height: -webkit-fill-available;" src="img/c4-with-tag.svg" alt="tagged commit">
+                    </div>
+                    <p class="fragment grow highlight-green">Tags are pointers to commits.</p>
+                </section>
+                <section>
+                    <h4>What is a tag (continued)?</h4>
+<pre class="bash"><code data-trim>
+$ cat .git/refs/tags/v1.0.0
+269e2c4caae031f530faefc417b72f5bc6eba2f3
+</code></pre>
+                </section>
+                <section>
+                    <h3>Detached HEAD</h3>
+<pre class="bash"><code data-trim>
+$ git checkout ':/C2' ⏎
+</code></pre>
+                </section>
+                <section>
+                    <h3>Detached HEAD</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 100%; height: 100%;" src="img/detached-head.svg" alt="Detached HEAD">
+                    </div>
+                </section>
+                <section>
+                    <h3>Detached HEAD Commit</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 100%; height: 100%;" src="img/detached-head-commit.svg" alt="Detached HEAD Commit">
+                    </div>
                 </section>
 				<section>
 					<h3>Additional Resources</h3>
