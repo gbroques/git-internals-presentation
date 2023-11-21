@@ -23,7 +23,7 @@
 			<div class="slides">
 				<section>
 					<h3><a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">Git Internals</a></h3>
-					<h4 class="fragment">Part 2: Branches and HEAD</h4>
+					<h4 class="fragment">Part 2: Branches, HEAD, & Tags</h4>
                 </section>
                 <section>
                     <h3>Part 1: Commit, trees, and blobs... <span class="fragment">oh my! 😲</span></h3>
@@ -51,7 +51,7 @@
                     <div style="background-color: white; height: 350px;">
                         <img style="width: 500px; height: -webkit-fill-available;" src="img/c1-with-master.svg" alt="Commit and master">
                     </div>
-                    <p class="fragment grow highlight-green">Branches are pointers to commits.</p>
+                    <p class="fragment grow highlight-green">Branches are <em>movable</em> pointers to commits.</p>
                 </section>
                 <section>
                     <h4>What is a branch (continued)?</h4>
@@ -67,7 +67,7 @@ $ cat .git/refs/heads/master
                 <section>
                     <h3>HEAD</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 500px; height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
+                        <img style="height: 100%;" src="img/c1-with-head-and-master.svg" alt="Commit, HEAD, and master">
                     </div>
                     <p class="fragment grow highlight-green">HEAD is a pointer to whatever is checked out.</p>
                 </section>
@@ -142,7 +142,7 @@ ref: refs/heads/master
                     <div style="background-color: white; height: 350px;">
                         <img style="width: 500px; height: -webkit-fill-available;" src="img/c4-with-tag.svg" alt="tagged commit">
                     </div>
-                    <p class="fragment grow highlight-green">Tags are pointers to commits.</p>
+                    <p class="fragment grow highlight-green">Tags are <em>unmovable</em> pointers to commits.</p>
                 </section>
                 <section>
                     <h4>What is a tag (continued)?</h4>
