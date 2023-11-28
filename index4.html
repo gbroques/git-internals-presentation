@@ -23,12 +23,12 @@
 			<div class="slides">
 				<section>
 					<h3><a href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain" target="_blank">Git Internals</a></h3>
-					<h4 class="fragment">Part 3: Merging</h4>
+					<h4 class="fragment">Part 4: Rebasing</h4>
                 </section>
                 <section>
-                    <h3>Part 2: Branches & HEAD</h3>
+                    <h3>Part 3: Merging</h3>
                     <div style="background-color: white;">
-                        <img style="width: 500px; height: 350px;" src="img/c1-with-head-and-master.svg" alt="Commit, branch, and HEAD">
+                        <img style="width: 500px; height: 350px;" src="img/c4-merge-feature-branch.svg" alt="Merge commit">
                     </div>
                 </section>
 				<section>
@@ -45,21 +45,12 @@
 							</ol>
 						</li>
                         <li class="fragment">Fast-forward options</li>
+                        <li class="fragment">Squash merging</li>
 					</ul>
 				</section>
                 <section>
                     <h3>Fast-forward Merge</h3>
-                    <p><em>Default behavior</em> when merging a <em class="fragment highlight-green">descendent</em> branch.</p>
-                </section>
-                <section>
-                    <h3>Fast-forward merge</h3>
-                    <div style="background-color: white; height: 350px;">
-                        <img style="width: 100%; height: 100%;" src="img/c3-checkout-master.svg" alt="Descendent branch">
-                    </div>
-<pre class="bash"><code>
-$ git merge-base --is-ancestor master feature-branch && echo yes || echo no
-yes
-</code></pre>
+                    <p><em>Default behavior</em> when merging a <em class="fragment highlight-green">non-divergent</em> branch.</p>
                 </section>
                 <section>
                     <h3>Fast-forward Merge</h3>
@@ -77,16 +68,6 @@ yes
                 <section>
                     <h3>True Merge</h3>
                     <p><em>Required</em> when merging a <em class="fragment highlight-green">divergent</em> branch.</p>
-                </section>
-                <section>
-                    <h3>True Merge</h3>
-                    <div style="background-color: white; height: 350px;">
-                        <img style="width: 100%; height: 100%;" src="img/c4.svg" alt="Diverged Branches">
-                    </div>
-<pre class="bash"><code>
-$ git merge-base --is-ancestor master feature-branch && echo yes || echo no
-no
-</code></pre>
                 </section>
                 <section>
                     <h3>True Merge</h3>
@@ -115,6 +96,13 @@ no
                 <section>
                     <p><code>git merge --ff-only &lt;branch&gt;</code></p>
                     <p class="fragment">Fast-forward when possible, otherwise exit.</p>
+                </section>
+                <section>
+                    <h3>Squash Merging</h3>
+                </section>
+                <section>
+                    <p><code>git merge --squash &lt;branch&gt;</code></p>
+                    <p class="fragment">Squash all commits from <code>branch</code> into a new commit upon merging.</p>
                 </section>
 				<section>
 					<h3>Additional Resources</h3>
