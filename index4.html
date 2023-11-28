@@ -28,87 +28,108 @@
                 <section>
                     <h3>Part 3: Merging</h3>
                     <div style="background-color: white;">
-                        <img style="width: 500px; height: 350px;" src="img/c4-merge-feature-branch.svg" alt="Merge commit">
+                        <img style="width: 100%" src="img/c4-merge-feature-branch.svg" alt="Merge commit">
                     </div>
                 </section>
 				<section>
 					<h3>Overview</h3>
 					<ul>
-                        <li class="fragment">Two types of merges:
-							<ol>
-                                <li class="fragment"><a href="https://git-scm.com/docs/git-merge#_fast_forward_merge" target="_blank">fast-forward</a></li>
-                                <li class="fragment"><a href="https://git-scm.com/docs/git-merge#_true_merge" target="_blank">true merge</a>
-                                    <ul class="fragment">
-                                        <li>merge commits</li>
-                                    </ul>
-                                </li>
-							</ol>
-						</li>
-                        <li class="fragment">Fast-forward options</li>
-                        <li class="fragment">Squash merging</li>
+                        <li class="fragment">What is "rebase"?</li>
 					</ul>
 				</section>
                 <section>
-                    <h3>Fast-forward Merge</h3>
-                    <p><em>Default behavior</em> when merging a <em class="fragment highlight-green">non-divergent</em> branch.</p>
+                    <h3>What is "rebase"?</h3>
+                    <p class="fragment">To establish a new base for a branch.</p>
                 </section>
                 <section>
-                    <h3>Fast-forward Merge</h3>
-                    <div style="background-color: white; height: 500px;">
-                        <img style="width: 100%; height: 100%;" src="img/c3-checkout-master.svg" alt="Descendent branch">
+                    <h3>Why rebase?</h3>
+                    <p class="fragment">To update <em class="fragment highlight-green">developer-owned</em> branches.</p>
+                </section>
+                <section>
+                    <h3 style="color: gold;">Golden Rule of Rebase</h3>
+                    <p class="fragment">Avoid rebasing <strong class="fragment highlight-red">public</strong> branches.</p>
+                </section>
+                <section>
+                    <h3>Why rebase vs. merge?</h3>
+                    <p class="fragment">To update developer-owned branches <strong class="fragment highlight-red">without merge commits</strong>.</p>
+                </section>
+                <section>
+                    <h3>Descendent Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Descendent branch">
                     </div>
-                    <p class="fragment"><code>git merge feature-branch</code> ➜</p>
+<pre class="bash"><code>
+$ git rebase master ⏎
+Current branch feature-branch is up to date.
+</code></pre>
                 </section>
                 <section>
-                    <h3>Fast-forward Merge (continued)</h3>
+                    <h3>Descendent Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Descendent branch">
+                    </div>
+<pre class="bash"><code>
+$ git merge-base --is-ancestor master feature-branch && \
+  echo yes || echo no ⏎
+yes
+</code></pre>
+                </section>
+                <section>
+                    <p>Commit C4 on <code>master</code> branch.</p>
+                </section>
+                <section>
+                    <h3>Divergent Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-checkout-feature-branch.svg" alt="Divergent branch">
+                    </div>
+<pre class="bash"><code>
+$ git merge-base --is-ancestor master feature-branch && \
+  echo yes || echo no ⏎
+no
+</code></pre>
+                </section>
+                <section>
+                    <h3>Divergent Branch</h3>
                     <div style="background-color: white; height: 500px;">
-                        <img style="width: 100%; height: 100%;" src="img/c3-merge-feature-branch.svg" alt="Descendent branch merged">
+                        <img style="width: 100%; height: 100%;" src="img/c4-checkout-feature-branch.svg" alt="Divergent branch">
+                    </div>
+                    <p class="fragment"><code>git rebase master</code> ➜</p>
+                </section>
+                <section>
+                    <h3>Merging Rebased Branch</h3>
+                    <div style="background-color: white; height: 350;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-rebased.svg" alt="Rebased branch">
+                    </div>
+<pre class="bash fragment"><code>
+$ git merge-base --is-ancestor master feature-branch && \
+  echo yes || echo no ⏎
+yes
+</code></pre>
+                </section>
+                <section>
+                    <h3>Rebasing creates new commits</h3>
+                    <div style="background-color: white; height: 500px;">
+                        <img style="width: 100%; height: 100%;" src="img/c3-not-equal-to-c3-prime.svg" alt="Rebasing creates new commits">
                     </div>
                 </section>
                 <section>
-                    <h3>True Merge</h3>
-                    <p><em>Required</em> when merging a <em class="fragment highlight-green">divergent</em> branch.</p>
-                </section>
-                <section>
-                    <h3>True Merge</h3>
-                    <div style="background-color: white; height: 500px;">
-                        <img style="width: 100%; height: 100%;" src="img/c4.svg" alt="Diverged Branches">
+                    <h3>Merging Rebased Branch</h3>
+                    <div style="background-color: white; height: 350;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-rebased.svg" alt="Rebased branch">
                     </div>
-                    <p class="fragment"><code>git merge feature-branch</code> ➜</p>
+                    <p class="fragment"><code>git checkout master</code></p>
+                    <p class="fragment"><code>git merge feature-branch </code></p>
                 </section>
                 <section>
-                    <h3>True Merge (continued)</h3>
-                    <div style="background-color: white; height: 500px;">
-                        <img style="width: 100%; height: 100%;" src="img/c4-merge-feature-branch.svg" alt="Diverged Branches">
-                    </div>
-                </section>
-                <section>
-                    <h3>Fast Forward Options</h3>
-                </section>
-                <section>
-                    <p><code>git merge --ff &lt;branch&gt;</code></p>
-                    <p class="fragment">(<strong class="fragment highlight-red">Default</strong>) Fast-forward when possible, otherwise create a merge commit.</p>
-                </section>
-                <section>
-                    <p><code>git merge --no-ff &lt;branch&gt;</code></p>
-                    <p class="fragment">Always create a merge commit.</p>
-                </section>
-                <section>
-                    <p><code>git merge --ff-only &lt;branch&gt;</code></p>
-                    <p class="fragment">Fast-forward when possible, otherwise exit.</p>
-                </section>
-                <section>
-                    <h3>Squash Merging</h3>
-                </section>
-                <section>
-                    <p><code>git merge --squash &lt;branch&gt;</code></p>
-                    <p class="fragment">Squash all commits from <code>branch</code> into a new commit upon merging.</p>
+                    <h3>Why rebase? (continued)</h3>
+                    <p>Fast-forward merge is possible.</p>
+                    <p class="fragment">No merge commit! 🥰</p>
                 </section>
 				<section>
 					<h3>Additional Resources</h3>
 					<ul>
 						<li><a target="_blank" href="https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain">https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain</a></li>
-						<li><a target="_blank" href="https://medium.com/@paritosh90/git-internals-merge-2fe923d0c0c6">GIT Internals (Part 3: Merge)</a></li>
+						<li><a target="_blank" href="https://medium.com/@paritosh90/git-rebase-7b7a355e80ee">GIT Internals (Part 3: Merge)</a></li>
 					</ul>
 				</section>
 			</div>
