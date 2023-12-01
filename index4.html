@@ -34,13 +34,13 @@
 				<section>
 					<h3>Overview</h3>
 					<ul>
+                        <li class="fragment">Why rebase?</li>
+                        <li class="fragment">"Golden Rule of Rebase"</li>
+                        <li class="fragment">Rebase vs. Merge</li>
                         <li class="fragment">What is "rebase"?</li>
+                        <li class="fragment">Rebase Example</li>
 					</ul>
 				</section>
-                <section>
-                    <h3>What is "rebase"?</h3>
-                    <p class="fragment">To establish a new base for a branch.</p>
-                </section>
                 <section>
                     <h3>Why rebase?</h3>
                     <p class="fragment">To update <em class="fragment highlight-green">developer-owned</em> branches.</p>
@@ -48,59 +48,86 @@
                 <section>
                     <h3 style="color: gold;">Golden Rule of Rebase</h3>
                     <p class="fragment">Avoid rebasing <strong class="fragment highlight-red">public</strong> branches.</p>
+                    <p class="fragment"><a href="https://redfin.engineering/git-rebasing-public-branches-works-much-better-than-youd-think-ecc9a115aea9" target="_blank">Git Rebasing Public Branches Works Much Better Than You'd Think</a> 😈</p>
                 </section>
                 <section>
                     <h3>Why rebase vs. merge?</h3>
-                    <p class="fragment">To update developer-owned branches <strong class="fragment highlight-red">without merge commits</strong>.</p>
+                    <p class="fragment">To update <em class="fragment highlight-green">developer-owned</em> branches <strong class="fragment highlight-red">without merge commits</strong>.</p>
                 </section>
                 <section>
-                    <h3>Descendent Branch</h3>
-                    <div style="background-color: white; height: 350px;">
-                        <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Descendent branch">
+                    <h3>What is "rebase"?</h3>
+                    <p class="fragment">To establish a new base for a branch.</p>
+                </section>
+                <section data-transition="fade">
+                    <h3>Branch Before Rebase</h3>
+                    <div style="background-color: white;">
+                        <img style="width: 100%; height: 100%;" src="img/branch-before-rebase.svg" alt="Branch before rebase">
                     </div>
-<pre class="bash"><code>
-$ git rebase master ⏎
-Current branch feature-branch is up to date.
-</code></pre>
+                </section>
+                <section data-transition="fade">
+                    <h3>Branch After Rebase</h3>
+                    <div style="background-color: white;">
+                        <img style="width: 100%; height: 100%;" src="img/branch-after-rebase.svg" alt="Branch after rebase">
+                    </div>
                 </section>
                 <section>
+                    <h3>Rebase Example</h3>
+                </section>
+                <section data-transition="slide-in none-out">
                     <h3>Descendent Branch</h3>
-                    <div style="background-color: white; height: 350px;">
+                    <div class="fragment" style="background-color: white; height: 350px;">
                         <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Descendent branch">
                     </div>
-<pre class="bash"><code>
+<pre class="bash fragment"><code data-trim>
 $ git merge-base --is-ancestor master feature-branch && \
   echo yes || echo no ⏎
 yes
 </code></pre>
                 </section>
-                <section>
-                    <p>Commit C4 on <code>master</code> branch.</p>
+                <section data-transition="none-in slide-out">
+                    <h3>Descendent Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c3.svg" alt="Descendent branch">
+                    </div>
+<pre class="bash"><code data-trim>
+$ git rebase master ⏎
+Current branch feature-branch is up to date.
+</code></pre>
                 </section>
                 <section>
+                    <p>Commit <strong class="fragment highlight-green">C4</strong> on <code class="fragment highlight-blue">master</code> branch.</p>
+                </section>
+                <section data-transition="slide-in none-out">
                     <h3>Divergent Branch</h3>
-                    <div style="background-color: white; height: 350px;">
+                    <div class="fragment" style="background-color: white; height: 350px;">
                         <img style="width: 100%; height: 100%;" src="img/c4-checkout-feature-branch.svg" alt="Divergent branch">
                     </div>
-<pre class="bash"><code>
+<pre class="bash fragment"><code data-trim>
 $ git merge-base --is-ancestor master feature-branch && \
   echo yes || echo no ⏎
 no
 </code></pre>
                 </section>
-                <section>
+                <section data-transition="none-in fade-out">
                     <h3>Divergent Branch</h3>
-                    <div style="background-color: white; height: 500px;">
+                    <div style="background-color: white; height: 350px;">
                         <img style="width: 100%; height: 100%;" src="img/c4-checkout-feature-branch.svg" alt="Divergent branch">
                     </div>
-                    <p class="fragment"><code>git rebase master</code> ➜</p>
+                    <p class="fragment"><code>git rebase master ➜</code></p>
                 </section>
-                <section>
-                    <h3>Merging Rebased Branch</h3>
-                    <div style="background-color: white; height: 350;">
+                <section data-transition="fade">
+                    <h3>Rebased Branch</h3>
+                    <div style="background-color: white; height: 350px;">
                         <img style="width: 100%; height: 100%;" src="img/c4-rebased.svg" alt="Rebased branch">
                     </div>
-<pre class="bash fragment"><code>
+                    <p class="fragment">Does <code>feature-branch</code> descend from <code>master</code>?</p>
+                </section>
+                <section data-transition="fade">
+                    <h3>Rebased Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-rebased.svg" alt="Rebased branch">
+                    </div>
+<pre class="bash"><code data-trim>
 $ git merge-base --is-ancestor master feature-branch && \
   echo yes || echo no ⏎
 yes
@@ -108,21 +135,34 @@ yes
                 </section>
                 <section>
                     <h3>Rebasing creates new commits</h3>
-                    <div style="background-color: white; height: 500px;">
+                    <div class="fragment" style="background-color: white; height: 500px;">
                         <img style="width: 100%; height: 100%;" src="img/c3-not-equal-to-c3-prime.svg" alt="Rebasing creates new commits">
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <h3>Merging Rebased Branch</h3>
-                    <div style="background-color: white; height: 350;">
+                    <div class="fragment" style="background-color: white; height: 350px;">
                         <img style="width: 100%; height: 100%;" src="img/c4-rebased.svg" alt="Rebased branch">
                     </div>
-                    <p class="fragment"><code>git checkout master</code></p>
-                    <p class="fragment"><code>git merge feature-branch </code></p>
+                    <p class="fragment"><code>git checkout master ➜</code></p>
+                </section>
+                <section data-transition="fade">
+                    <h3>Merging Rebased Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-rebased-checkout-master.svg" alt="Rebased branch, checkout master">
+                    </div>
+                    <p class="fragment"><code>git merge feature-branch ➜</code></p>
+                </section>
+                <section data-transition="fade">
+                    <h3>Merging Rebased Branch</h3>
+                    <div style="background-color: white; height: 350px;">
+                        <img style="width: 100%; height: 100%;" src="img/c4-merge-rebased-branch.svg" alt="Rebased branch, merged">
+                    </div>
+                    <p class="fragment">Fast-forward merge</p>
                 </section>
                 <section>
                     <h3>Why rebase? (continued)</h3>
-                    <p>Fast-forward merge is possible.</p>
+                    <p class="fragment">Fast-forward merge is possible.</p>
                     <p class="fragment">No merge commit! 🥰</p>
                 </section>
 				<section>
