@@ -24,6 +24,7 @@
 				<section>
 					<h3>Git Internals</h3>
 					<h4 class="fragment">Part 1: Objects</h4>
+                    <p class="fragment">How <code>git</code> stores project history.</p>
 				</section>
 				<section>
 					<h3>Overview</h3>
@@ -61,22 +62,6 @@
 				</section>
 				<section>
 					<h3>Objects</h3>
-				</section>
-				<section>
-					<h3>What is Git?</h3>
-                    <p class="fragment">Two unconventional definitions:</p>
-					<ol>
-						<li class="fragment"><a href="https://en.wikipedia.org/wiki/Content-addressable_storage" target="_blank">a content-addressable filesystem</a></li>
-						<li class="fragment">a simple key-value data store</li>
-					</ol>
-				</section>
-				<section>
-					<h4>What are the values and keys?</h4>
-					<p class="fragment">Values are <strong class="fragment highlight-green">objects</strong>.</p>
-					<p class="fragment">Keys are <strong class="fragment highlight-green">hashes</strong>.</p>
-				</section>
-				<section>
-					<p>Objects are <strong class="fragment highlight-red">immutable</strong>.</p>
 				</section>
                 <section>
                     <p><code>git</code> frequently provides information about objects!</p>
@@ -148,6 +133,10 @@ Fast-forward
 						</code>
 					</pre>
 				</section>
+                <section>
+                    <p>What's needed to store project history?</p>
+                    <h1 class="fragment">🤔</h1>
+                </section>
 				<section>
 					<h3>3 Object Types</h3>
 					<ol>
@@ -157,6 +146,28 @@ Fast-forward
 					</ol>
 				</section>
 				<section>
+					<h3>What is Git?</h3>
+                    <p class="fragment">Two unconventional definitions:</p>
+					<ol>
+						<li class="fragment"><a href="https://en.wikipedia.org/wiki/Content-addressable_storage" target="_blank">a content-addressable storage system</a></li>
+						<li class="fragment">a simple key-value data store</li>
+					</ol>
+				</section>
+                <section>
+                    <blockquote>
+                        Content-addressable storage systems work by passing the <strong class="fragment highlight-red">contents of a file</strong> through a <em class="fragment highlight-green">cryptographic hash function</em> to generate a unique key, the "content address".
+                    </blockquote>
+                    <p>— <a href="https://en.wikipedia.org/wiki/Content-addressable_storage" target="_blank">Wikipedia - Content-addressable storage</a><p>
+                </section>
+				<section>
+					<h4>What are the values and keys?</h4>
+					<p class="fragment">Values are <strong class="fragment highlight-green">objects</strong>.</p>
+					<p class="fragment">Keys are <strong class="fragment highlight-green">hashes</strong>.</p>
+				</section>
+				<section>
+					<p>Objects are <strong class="fragment highlight-red">immutable</strong>.</p>
+				</section>
+				<section>
 					<h3>Object Hashing & Storage</h3>
 					<p class="fragment">Stored in the object database (<code>.git/objects/</code>).</p>
 					<p class="fragment">Each object has a unique <strong class="fragment highlight-red">40-char</strong> <a href="https://en.wikipedia.org/wiki/SHA-1#Data_integrity" target="_blank">SHA-1</a> hash.</p>
@@ -164,7 +175,7 @@ Fast-forward
 						<code data-noescape>
 .git/objects
 ├── 0f/
-│   └── 6a4e6354e536514412ba38ab50ad6264a4d323  # <strong>38</strong> char filename
+│   └── 6a4e6354e536514412ba38ab50ad6264a4d323  <mark class="fragment"># <strong>38 char filename</strong></mark>
 ├── 2d/
 │   ├── 0e74b07052fd2d44788bb3cced2923e56786bb
 │   └── 2bd6b04c3e39b0c611ada8b0cbd12e64f46c11
@@ -184,14 +195,22 @@ x☺K□□OR□d□□KU(I□(□☻,□♣*
                     </pre>
                 </section>
                 <section>
-                    <section>
-                        <h3>Object File Contents</h3>
-                        <p class="fragment">Header containing type, size in bytes, and <a href="https://en.wikipedia.org/wiki/Null_character" target="_blank">null character</a> separating header from content.</p>
+                    <h3>Object File Contents</h3>
+                    <p class="fragment" data-fragment-index="0"><strong>Header</strong> containing:</p>
+                    <ul>
+                        <li class="fragment" data-fragment-index="1"><span class="fragment highlight-red" data-fragment-index="5">type</span></li>
+                        <li class="fragment" data-fragment-index="2"><span class="fragment highlight-blue" data-fragment-index="6">size in bytes</span></li>
+                    </ul>
+                    <p class="fragment" data-fragment-index="3">separated from <strong class="fragment highlight-green" data-fragment-index="7">content</strong> by a <a href="https://en.wikipedia.org/wiki/Null_character" target="_blank">null character</a>.</p>
+                    <p class="fragment" data-fragment-index="4"><strong>Example:</strong> <code><span class="fragment highlight-red" data-fragment-index="5">blob</span> <span class="fragment highlight-blue" data-fragment-index="6">9</span>\x00<span class="fragment highlight-green" data-fragment-index="7">one text</span></code></p>
+                </section>
+                <section>
+                    <h3>Object File Contents</h3>
+                    <p class="fragment">Hash is generated from contents of file.</p>
 <pre class="bash fragment"><code data-trim>
 $ echo -e 'blob 9\x00one text' | sha1sum --text
 0f6a4e6354e536514412ba38ab50ad6264a4d323  -
 </code></pre>
-                    </section>
                 </section>
                 <section>
                     <p style="text-align: center;"><img style="max-width: 50%; background-color: white; padding: 3%;" src="img/dag.svg" alt="DAG"></p>
@@ -214,8 +233,8 @@ $ echo -e 'blob 9\x00one text' | sha1sum --text
 				<section>
 					<h3>Hash-Object Example</h3>
 <pre class="text"><code data-trim>
-$ echo "text" | git hash-object --stdin
-8e27be7d6154a1f68ea9160ef0e18691d20560
+$ echo "one text" | git hash-object --stdin
+0f6a4e6354e536514412ba38ab50ad6264a4d323
 </code></pre>
 				</section>
 				<section>
@@ -224,9 +243,23 @@ $ echo "text" | git hash-object --stdin
 					<p data-fragment-index="2" class="fragment"><a target="_blank" href="https://git-scm.com/docs/git-cat-file">Reference</a></p>
 				</section>
 				<section>
+					<h3>cat-file -p Example</h3>
+<pre class="text"><code data-trim>
+$ git cat-file -p 0f6a4e6354e536514412ba38ab50ad6264a4d323
+one text
+</code></pre>
+				</section>
+				<section>
 					<p><code>git cat-file -<strong class="fragment highlight-green" data-fragment-index="1">t</strong> &lt;hash&gt;</code></p>
 					<p class="fragment" data-fragment-index="0">output the <strong data-fragment-index="1" class="fragment highlight-green">type</strong> of an object</code></p>
 					<p data-fragment-index="2" class="fragment"><a target="_blank" href="https://git-scm.com/docs/git-cat-file">Reference</a></p>
+				</section>
+				<section>
+					<h3>cat-file -t Example</h3>
+<pre class="text"><code data-trim>
+$ git cat-file -t 0f6a4e6354e536514412ba38ab50ad6264a4d323
+blob
+</code></pre>
 				</section>
 				<section>
 					<ul style="list-style-type: none; margin: 0; padding: 0;">
