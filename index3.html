@@ -51,57 +51,60 @@
                     <h3>Fast-forward Merge</h3>
                     <p><em class="fragment highlight-red">Default behavior</em> when merging a <em class="fragment highlight-green">descendent</em> branch.</p>
                 </section>
-                <section>
+                <section data-transition="none-out">
                     <h3>Fast-forward merge</h3>
-                    <div style="background-color: white; height: 350px;">
+                    <div style="background-color: white">
                         <img style="width: 100%; height: 100%;" src="img/c3-checkout-master.svg" alt="Descendent branch">
                     </div>
-<pre class="bash"><code>
+<pre class="bash"><code data-trim>
 $ git merge-base --is-ancestor master feature-branch && \
   echo yes || echo no ⏎
 yes
 </code></pre>
                 </section>
-                <section>
+                <section data-transition="none-in fade-out">
                     <h3>Fast-forward Merge</h3>
                     <div style="background-color: white; height: 500px;">
                         <img style="width: 100%; height: 100%;" src="img/c3-checkout-master.svg" alt="Descendent branch">
                     </div>
-                    <p class="fragment"><code>git merge feature-branch</code> ➜</p>
+                    <p><code>git merge feature-branch ➜</code></p>
                 </section>
-                <section>
-                    <h3>Fast-forward Merge (continued)</h3>
+                <section data-transition="fade-in slide-out">
+                    <h3>Fast-forward Merge</h3>
                     <div style="background-color: white; height: 500px;">
                         <img style="width: 100%; height: 100%;" src="img/c3-merge-feature-branch.svg" alt="Descendent branch merged">
                     </div>
+                    <p class="fragment">True merge ➜</p>
                 </section>
                 <section>
                     <h3>True Merge</h3>
                     <p><em class="fragment highlight-red">Required</em> when merging a <em class="fragment highlight-green">divergent</em> branch.</p>
                 </section>
-                <section>
+                <section data-transition="none-out">
                     <h3>True Merge</h3>
-                    <div style="background-color: white; height: 350px;">
+                    <div style="background-color: white;">
                         <img style="width: 100%; height: 100%;" src="img/c4.svg" alt="Diverged Branches">
                     </div>
-<pre class="bash"><code>
+<pre class="bash"><code data-trim>
 $ git merge-base --is-ancestor master feature-branch && \
   echo yes || echo no ⏎
 no
 </code></pre>
                 </section>
-                <section>
+                <section data-transition="none-in fade-out">
                     <h3>True Merge</h3>
-                    <div style="background-color: white; height: 500px;">
+                    <div style="background-color: white;">
                         <img style="width: 100%; height: 100%;" src="img/c4.svg" alt="Diverged Branches">
                     </div>
-                    <p class="fragment"><code>git merge feature-branch</code> ➜</p>
+                    <p><code>git merge feature-branch ➜</code></p>
                 </section>
-                <section>
-                    <h3>True Merge (continued)</h3>
-                    <div style="background-color: white; height: 500px;">
+                <section data-transition="fade-in slide-out">
+                    <h3>True Merge</h3>
+                    <div style="background-color: white;">
                         <img style="width: 100%; height: 100%;" src="img/c4-merge-feature-branch.svg" alt="Diverged Branches">
                     </div>
+                    <p class="fragment">Command-line options ➜</p>
+
                 </section>
                 <section>
                     <h3>Command-line Options</h3>
