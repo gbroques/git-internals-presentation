@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="highcharts-root" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Arial, Helvetica, sans-serif;font-size:12px;" xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480">
+    <rect fill="#ffffff" class="highcharts-background" x="0" y="0" width="600" height="480" rx="0" ry="0"></rect>
+    <rect fill="none" class="highcharts-plot-background" x="10" y="53" width="580" height="412"></rect>
+    <g class="highcharts-pane-group" data-z-index="0"></g>
+    <rect fill="none" class="highcharts-plot-border" data-z-index="1" x="10" y="53" width="580" height="412"></rect>
+    <g class="highcharts-series-group" data-z-index="3">
+        <g data-z-index="0.1" class="highcharts-series highcharts-series-0 highcharts-pie-series" transform="translate(10,53) scale(1 1)">
+            <path fill="#99dde3" d="M 303.4641535161496 42.50000365048413 A 176 176 0 0 1 313.13932792437896 42.76416598437788 L 303.5 218.5 A 0 0 0 0 0 303.5 218.5 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-0"></path>
+            <path fill="#a2a8b3" d="M 313.3150589094417 42.77389317860539 A 176 176 0 0 1 330.1136721658779 44.52381641774306 L 303.5 218.5 A 0 0 0 0 0 303.5 218.5 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-1"></path>
+            <path fill="#7b559b" d="M 330.28763501362914 44.55051707355784 A 176 176 0 1 1 128.28373937554613 201.90897794638727 L 303.5 218.5 A 0 0 0 1 0 303.5 218.5 Z" transform="translate(6,8)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-point-select highcharts-color-2"></path>
+            <path fill="#33bbc6" d="M 128.3004180029576 201.7337700104759 A 176 176 0 0 1 130.1699988876302 187.9596870614284 L 303.5 218.5 A 0 0 0 0 0 303.5 218.5 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-3"></path>
+            <path fill="#008893" d="M 130.20062586047206 187.78637235935958 A 176 176 0 0 1 303.2555395308994 42.50016977542549 L 303.5 218.5 A 0 0 0 0 0 303.5 218.5 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-4"></path>
+        </g>
+        <g data-z-index="0.1" class="highcharts-markers highcharts-series-0 highcharts-pie-series" transform="translate(10,53) scale(1 1)"></g>
+    </g>
+    <g data-z-index="6" class="highcharts-data-labels highcharts-series-0 highcharts-pie-series" transform="translate(10,53) scale(1 1)">
+        <path fill="none" class="highcharts-data-label-connector highcharts-color-0" stroke="#99dde3" stroke-width="1" d="M 314.27152849873266 12.5 C 309.27152849873266 12.5 308.7672201833093 30.573800678190324 308.59911741150154 36.571445337397016 L 308.4310146396938 42.56908999660371"></path>
+        <path fill="none" class="highcharts-data-label-connector highcharts-color-1" stroke="#a2a8b3" stroke-width="1" d="M 404.9987046545185 36.5 C 399.9987046545185 36.5 323.0763241991781 31.522013245278856 322.451547894949 37.489395801280594 L 321.8267715907199 43.45677835728233"></path>
+        <path fill="none" class="highcharts-data-label-connector highcharts-color-2" stroke="#7b559b" stroke-width="1" d="M 435.0137005885092 381.07393260729424 C 430.0137005885092 381.07393260729424 418.95910539145507 366.8684433503462 415.27424032577034 362.13328026469685 L 411.5893752600856 357.3981171790475"></path>
+        <path fill="none" class="highcharts-data-label-connector highcharts-color-3" stroke="#33bbc6" stroke-width="1" d="M 94.38447172352028 190.69980006522252 C 99.38447172352028 190.69980006522252 117.21980914573692 193.12894374884388 123.16492161980915 193.93865831005098 L 129.11003409388138 194.74837287125808"></path>
+        <path fill="none" class="highcharts-data-label-connector highcharts-color-4" stroke="#008893" stroke-width="1" d="M 166.1330362995718 60.65518088727295 C 171.1330362995718 60.65518088727295 182.69908167145394 74.44744663498696 186.55443012874795 79.04486855089164 L 190.40977858604197 83.64229046679631"></path>
+        <g class="highcharts-label highcharts-data-label highcharts-data-label-color-0" data-z-index="1" transform="translate(319,3)">
+            <text x="5" data-z-index="1" style="font-size:11px;font-weight:bold;color:#000000;cursor:pointer;fill:#000000;" y="16">
+                <tspan style="font-weight: bold;" x="5" y="16" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round">Bazaar</tspan>
+                <tspan dx="0" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round" style="">: 0%</tspan>
+                <tspan style="font-weight:bold" x="5" y="16">Bazaar</tspan>
+                <tspan dx="0">: 0%</tspan>
+            </text>
+        </g>
+        <g class="highcharts-label highcharts-data-label highcharts-data-label-color-1" data-z-index="1" transform="translate(410,27)">
+            <text x="5" data-z-index="1" style="font-size:11px;font-weight:bold;color:#000000;cursor:pointer;fill:#000000;" y="16">
+                <tspan style="font-weight: bold;" x="5" y="16" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round">CVS</tspan>
+                <tspan dx="0" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round" style="">: 1%</tspan>
+                <tspan style="font-weight:bold" x="5" y="16">CVS</tspan>
+                <tspan dx="0">: 1%</tspan>
+            </text>
+        </g>
+        <g class="highcharts-label highcharts-data-label highcharts-data-label-color-2" data-z-index="1" transform="translate(440,371)">
+            <text x="5" data-z-index="1" style="font-size:11px;font-weight:bold;color:#000000;cursor:pointer;fill:#000000;" y="16">
+                <tspan style="font-weight: bold;" x="5" y="16" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round">Git</tspan>
+                <tspan dx="0" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round" style="">: 74%</tspan>
+                <tspan style="font-weight:bold" x="5" y="16">Git</tspan>
+                <tspan dx="0">: 74%</tspan>
+            </text>
+        </g>
+        <g class="highcharts-label highcharts-data-label highcharts-data-label-color-3" data-z-index="1" transform="translate(6,181)">
+            <text x="5" data-z-index="1" style="font-size:11px;font-weight:bold;color:#000000;cursor:pointer;fill:#000000;" y="16">
+                <tspan style="font-weight: bold;" x="5" y="16" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round">Mercurial</tspan>
+                <tspan dx="0" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round" style="">: 1%</tspan>
+                <tspan style="font-weight:bold" x="5" y="16">Mercurial</tspan>
+                <tspan dx="0">: 1%</tspan>
+            </text>
+        </g>
+        <g class="highcharts-label highcharts-data-label highcharts-data-label-color-4" data-z-index="1" transform="translate(62,51)">
+            <text x="5" data-z-index="1" style="font-size:11px;font-weight:bold;color:#000000;cursor:pointer;fill:#000000;" y="16">
+                <tspan style="font-weight: bold;" x="5" y="16" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round">Subversion</tspan>
+                <tspan dx="0" class="highcharts-text-outline" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2px" stroke-linejoin="round" style="">: 22%</tspan>
+                <tspan style="font-weight:bold" x="5" y="16">Subversion</tspan>
+                <tspan dx="0">: 22%</tspan>
+            </text>
+        </g>
+    </g>
+    <g class="highcharts-legend" data-z-index="7">
+        <rect fill="none" class="highcharts-legend-box" rx="0" ry="0" x="0" y="0" width="8" height="8" visibility="hidden"></rect>
+        <g data-z-index="1">
+            <g></g>
+        </g>
+    </g>
+</svg>
